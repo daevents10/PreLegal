@@ -8,7 +8,7 @@ The available documents are covered in the catalog.json file in the project root
 
 @catalog.json
 
-The current implementation supports all 11 document types via AI chat with full user authentication and document persistence.
+The current implementation is the V1 technical foundation plus a manual-form Mutual NDA creator; AI chat, the other document types and document persistence are not built yet (see Implementation Status).
 
 ## Development process
 
@@ -17,6 +17,8 @@ When instructed to build a feature:
 2. Develop the feature - do not skip any step from the feature-dev 7 step process
 3. Thoroughly test the feature with unit tests and integration tests and fix any issues
 4. Submit a PR using your github tools
+
+Jira ticket keys (PL-N) are the source of truth for scope; read the ticket rather than assuming the roadmap below matches its number.
 
 ## AI design
 
@@ -56,50 +58,31 @@ Backend available at http://localhost:8000
 
 ## Implementation Status
 
-### Completed (PL-4)
-- Docker multi-stage build (Node frontend + Python backend)
-- FastAPI backend with SQLite (fresh DB each container start)
-- Next.js static export served by FastAPI at localhost:8000
-- Auth routes: POST /api/auth/signup, POST /api/auth/signin, POST /api/auth/signout, GET /api/auth/me
-- Start/stop scripts for Mac, Linux, Windows
-- Mutual NDA form with live preview and PDF download
+### Completed
+- **PL-6** – Common Paper template dataset in `templates/` and `catalog.json`, with integrity tests (`tests/test_catalog.py`)
+- **PL-7** – Mutual NDA creator prototype: manual form, live preview, PDF download (`@react-pdf/renderer`); Standard Terms parsed from `templates/` at build time
+- **PL-8** – V1 technical foundation:
+  - Multi-stage `Dockerfile` (Node 22 builds the Next.js static export; Python 3.12 + uv runs FastAPI/uvicorn on :8000)
+  - FastAPI serves `/api/*` and the static frontend at `/`
+  - SQLite (`backend/src/prelegal_backend/db.py`) recreated on every app start; `users` table only
+  - Auth API (`auth.py`): bcrypt password hashes, JWT session in HttpOnly `prelegal_session` cookie
+  - Start/stop scripts in `scripts/` (Mac/Linux share `_start.sh`/`_stop.sh`); each start runs a fresh `--rm` container, passing `.env` if present
+  - The Docker build itself has not yet been verified on a machine with Docker installed
 
-### Completed (PL-5)
-- AI chat interface replaces manual form for NDA creation
-- Uses LiteLLM via OpenRouter with Cerebras inference (gpt-oss-120b model)
-- Structured outputs for reliable field extraction from conversation
-- Live preview updates as AI extracts fields from chat
-- AI greets user, asks questions conversationally, and confirms when complete
-- Download button appears when all required fields are gathered
-
-### Completed (PL-6)
-- Support for all 11 document types from catalog.json
-- AI detects document type from user requests and routes accordingly
-- Dedicated preview/PDF components for Mutual NDA, Cloud Service Agreement, Pilot Agreement
-- Generic preview/PDF components for remaining document types (Design Partner, SLA, Professional Services, Partnership, Software License, DPA, BAA, AI Addendum)
-- Auto-focus chat input after sending messages
-- AI always asks follow-on questions when more information is needed
-
-### Completed (PL-7)
-- Functional user authentication with JWT tokens in HttpOnly cookies
-- User signup and signin with email/password (bcrypt password hashing)
-- Document persistence - users can save documents to their account
-- My Documents modal to view, load, and delete saved documents
-- User menu with sign out functionality
-- New Document button to start fresh
-- Auth context for managing user state across the app
-- Protected document save/load endpoints
+### Roadmap (not yet implemented)
+- AI chat replaces the manual NDA form (LiteLLM → OpenRouter/Cerebras, structured outputs, live preview, download when complete)
+- All document types from catalog.json, with AI detecting the requested type; generic preview/PDF components for less common types
+- Frontend sign up / sign in UI, user menu, auth context
+- Document persistence: save, list, load, delete documents per user (`/api/documents` CRUD)
 
 ### Current API Endpoints
-- `POST /api/auth/signup` - Create new user account
-- `POST /api/auth/signin` - Sign in and receive JWT cookie
-- `POST /api/auth/signout` - Clear auth cookie
-- `GET /api/auth/me` - Get current user info
-- `GET /api/documents` - List user's saved documents (auth required)
-- `POST /api/documents` - Save new document (auth required)
-- `GET /api/documents/{id}` - Get specific document (auth required)
-- `PUT /api/documents/{id}` - Update document (auth required)
-- `DELETE /api/documents/{id}` - Delete document (auth required)
-- `GET /api/chat/greeting` - Get AI greeting
-- `POST /api/chat/message` - Send chat message and get AI response
 - `GET /api/health` - Health check
+- `POST /api/auth/signup` - Create account (201; 409 if email taken; 422 invalid input) and set session cookie
+- `POST /api/auth/signin` - Sign in (401 on bad credentials) and set session cookie
+- `POST /api/auth/signout` - Clear session cookie (204)
+- `GET /api/auth/me` - Current user (401 if not signed in)
+
+### Configuration and tests
+- Env vars: `PRELEGAL_DB_PATH` (default `backend/data/prelegal.db`), `PRELEGAL_STATIC_DIR` (default `frontend/out`), `PRELEGAL_SECRET_KEY` (random per process if unset), `TEMPLATES_DIR` (frontend build)
+- Tests: `cd backend && uv run pytest`; `cd frontend && npm test`; `uv run --project backend python -m pytest tests`
+- Local run without Docker: `cd frontend && npm run build`, then `cd backend && uv run prelegal-backend`
