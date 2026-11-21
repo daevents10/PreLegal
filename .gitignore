@@ -118,3 +118,6 @@ docker-compose.override.yml
 # Claude Code local settings
 # =========================
 .claude/settings.local.json
+
+# Redundant local storage (not part of project)
+DownloadedFiles/
