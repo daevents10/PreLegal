@@ -13,7 +13,7 @@ export default async function Home() {
           Prelegal <span className="text-accent">·</span> Mutual NDA Creator
         </h1>
         <p className="text-sm text-muted">
-          Fill in the key terms, review the agreement, and download a ready-to-sign PDF.
+          Chat with the AI assistant to fill in the key terms, review the agreement, and download a ready-to-sign PDF.
         </p>
       </header>
       <NdaCreator terms={terms} />

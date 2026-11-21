@@ -7,10 +7,11 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from pathlib import Path
 
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
-from prelegal_backend import auth
+from prelegal_backend import auth, chat
 from prelegal_backend.db import init_db, resolve_db_path
 
 logger = logging.getLogger(__name__)
@@ -19,6 +20,9 @@ logger = logging.getLogger(__name__)
 # Containers/packaged installs should set PRELEGAL_STATIC_DIR explicitly.
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_STATIC_DIR = PROJECT_ROOT / "frontend" / "out"
+
+# Local runs read secrets such as OPENROUTER_API_KEY from the repo .env (Docker passes --env-file).
+load_dotenv(PROJECT_ROOT / ".env")
 
 
 def create_app(static_dir: Path | None = None, db_path: Path | None = None) -> FastAPI:
@@ -43,6 +47,7 @@ def create_app(static_dir: Path | None = None, db_path: Path | None = None) -> F
         return {"status": "ok"}
 
     app.include_router(auth.router)
+    app.include_router(chat.router)
 
     # Mounted last so /api routes take precedence over the catch-all static mount.
     if static_dir.is_dir():
