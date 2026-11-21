@@ -121,3 +121,4 @@ docker-compose.override.yml
 
 # Redundant local storage (not part of project)
 DownloadedFiles/
+backend/data/

@@ -5,7 +5,10 @@ description = "Prelegal API: FastAPI backend serving the legal document drafting
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "bcrypt>=5.0.0",
     "fastapi>=0.165.0",
+    "pydantic[email]>=2.14.4",
+    "pyjwt>=2.15.1",
     "uvicorn[standard]>=0.54.0",
 ]
 
