@@ -1,0 +1,30 @@
+License for the contents of this directory
+==========================================
+
+All legal agreement templates in this "templates" directory are standard
+agreements published by Common Paper (https://commonpaper.com) and obtained from
+the Common Paper GitHub account (https://github.com/CommonPaper).
+
+They are licensed under the Creative Commons Attribution 4.0 International
+License (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/
+
+Attribution: Common Paper standard agreements, (c) Common Paper, Inc.,
+used under CC BY 4.0. Files have been renamed for use in this project; their
+content has not been modified.
+
+Source repositories (commit retrieved):
+  mutual-nda.md                       CommonPaper/Mutual-NDA (2a3068b) - Mutual-NDA.md
+  mutual-nda-coverpage.md             CommonPaper/Mutual-NDA (2a3068b) - Mutual-NDA-coverpage.md
+  cloud-service-agreement.md          CommonPaper/CSA (3efceb0) - CSA.md
+  design-partner-agreement.md         CommonPaper/Design-Partner-Agreement (ab676a7) - design-partner-agreement.md
+  service-level-agreement.md          CommonPaper/SLA (5b0e633) - sla.md
+  professional-services-agreement.md  CommonPaper/PSA (3fb650a) - psa.md
+  data-processing-agreement.md        CommonPaper/DPA (9f1c40d) - DPA.md
+  software-license-agreement.md       CommonPaper/Software-License-Agreement (8ea7de3) - Software-License-Agreement.md
+  partnership-agreement.md            CommonPaper/Partnership-Agreement (6edeb5a) - Partnership-Agreement.md
+  pilot-agreement.md                  CommonPaper/Pilot-Agreement (5e7cdd4) - Pilot-Agreement.md
+  business-associate-agreement.md     CommonPaper/BAA (5f1fd99) - BAA.md
+  ai-addendum.md                      CommonPaper/AI-Addendum (6d9b044) - AI-Addendum.md
+
+The rest of this project is licensed separately (see LICENSE in the project root).

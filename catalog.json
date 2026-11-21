@@ -1,0 +1,66 @@
+{
+  "source": "Common Paper (https://github.com/CommonPaper)",
+  "license": "CC BY 4.0",
+  "templates": [
+    {
+      "name": "Mutual Non-Disclosure Agreement",
+      "description": "Standard terms for a mutual NDA protecting confidential information exchanged between two parties evaluating or pursuing a business relationship.",
+      "filename": "mutual-nda.md"
+    },
+    {
+      "name": "Mutual NDA Cover Page",
+      "description": "Cover page for the Mutual NDA capturing the variable terms: purpose, effective date, MNDA term, term of confidentiality, governing law and jurisdiction, and signatures.",
+      "filename": "mutual-nda-coverpage.md"
+    },
+    {
+      "name": "Cloud Service Agreement",
+      "description": "Agreement for selling and buying cloud software and SaaS products, covering access and use, restrictions, payment, privacy and security, warranties, liability, and confidentiality.",
+      "filename": "cloud-service-agreement.md"
+    },
+    {
+      "name": "Design Partner Agreement",
+      "description": "Agreement giving an early partner access to a pre-release product in exchange for feedback, covering product access, feedback rights, confidentiality, and term.",
+      "filename": "design-partner-agreement.md"
+    },
+    {
+      "name": "Service Level Agreement",
+      "description": "Service level terms defining target uptime, target response times for support, service credits, and remedies for a cloud service provider.",
+      "filename": "service-level-agreement.md"
+    },
+    {
+      "name": "Professional Services Agreement",
+      "description": "Agreement for professional services delivered under statements of work, covering deliverables, intellectual property, payment, warranties, and liability.",
+      "filename": "professional-services-agreement.md"
+    },
+    {
+      "name": "Data Processing Agreement",
+      "description": "GDPR-oriented data processing terms covering processor and subprocessor relationships, data subject rights, international transfers, security, and breach notification.",
+      "filename": "data-processing-agreement.md"
+    },
+    {
+      "name": "Software License Agreement",
+      "description": "Agreement for licensing on-premise or installable software, covering license grant, restrictions, payment, support, warranties, and liability.",
+      "filename": "software-license-agreement.md"
+    },
+    {
+      "name": "Partnership Agreement",
+      "description": "Agreement for business partnerships covering each party's cooperation obligations, trademark licensing, fees, confidentiality, and liability.",
+      "filename": "partnership-agreement.md"
+    },
+    {
+      "name": "Pilot Agreement",
+      "description": "Short-term trial agreement allowing a prospective customer to evaluate a product during a pilot period before committing to a longer-term contract.",
+      "filename": "pilot-agreement.md"
+    },
+    {
+      "name": "Business Associate Agreement",
+      "description": "HIPAA business associate terms governing how a provider may use, disclose, and safeguard protected health information (PHI), including breach reporting.",
+      "filename": "business-associate-agreement.md"
+    },
+    {
+      "name": "AI Addendum",
+      "description": "Addendum to a services agreement for AI features, covering use of AI services, ownership of inputs and outputs, model training restrictions, and AI-specific disclaimers.",
+      "filename": "ai-addendum.md"
+    }
+  ]
+}
