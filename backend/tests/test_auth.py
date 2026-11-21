@@ -111,6 +111,7 @@ def _token(client: TestClient, *, secret: str | None = None, **overrides) -> str
 )
 def test_me_rejects_invalid_sessions(client: TestClient, make_token) -> None:
     signup(client)
+    client.cookies.clear()  # replace (not add alongside) the valid signup cookie
     client.cookies.set(COOKIE_NAME, make_token(client))
     assert client.get("/api/auth/me").status_code == 401
 

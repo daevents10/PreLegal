@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import NdaForm from "@/components/NdaForm";
+import NdaChat from "@/components/NdaChat";
 import NdaPreview from "@/components/NdaPreview";
 import { defaultNdaData, missingFields, pdfFileName, type NdaData } from "@/lib/nda";
 import type { StandardTerms } from "@/lib/templates";
@@ -43,9 +43,9 @@ export default function NdaCreator({ terms }: { terms: StandardTerms }) {
     <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
       <section aria-labelledby="details-heading" className="space-y-4">
         <h2 id="details-heading" className="text-lg font-semibold text-navy">
-          Agreement details
+          Chat with the assistant
         </h2>
-        <NdaForm data={data} onChange={setData} />
+        <NdaChat data={data} onChange={setData} />
       </section>
 
       <section aria-labelledby="preview-heading" className="space-y-4">
@@ -64,7 +64,7 @@ export default function NdaCreator({ terms }: { terms: StandardTerms }) {
         </div>
         {missing.length > 0 && (
           <p role="status" className="rounded-md border border-accent bg-accent/10 px-3 py-2 text-sm text-navy">
-            Complete these fields to download: {missing.join(", ")}
+            Still needed to download: {missing.join(", ")}
           </p>
         )}
         {error && (

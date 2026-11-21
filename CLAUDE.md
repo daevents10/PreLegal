@@ -8,7 +8,7 @@ The available documents are covered in the catalog.json file in the project root
 
 @catalog.json
 
-The current implementation is the V1 technical foundation plus a manual-form Mutual NDA creator; AI chat, the other document types and document persistence are not built yet (see Implementation Status).
+The current implementation is the V1 technical foundation plus an AI-chat Mutual NDA creator; the other document types, the sign-in UI and document persistence are not built yet (see Implementation Status).
 
 ## Development process
 
@@ -68,9 +68,12 @@ Backend available at http://localhost:8000
   - Auth API (`auth.py`): bcrypt password hashes, JWT session in HttpOnly `prelegal_session` cookie
   - Start/stop scripts in `scripts/` (Mac/Linux share `_start.sh`/`_stop.sh`); each start runs a fresh `--rm` container, passing `.env` if present
   - The Docker build itself has not yet been verified on a machine with Docker installed
+- **PL-9** – AI chat for the Mutual NDA (replaces the manual form):
+  - Stateless `POST /api/chat` (`backend/src/prelegal_backend/chat.py`): client sends message history + current fields; LiteLLM → OpenRouter `gpt-oss-120b` on Cerebras with a strict structured output `{reply, updates}` (null = unchanged), merged server-side
+  - Frontend `NdaChat` component (fixed greeting, Enter to send, thinking state, retry on error, input auto-focus); live preview and PDF download unchanged
+  - No auth required yet; conversation lives only in the browser
 
 ### Roadmap (not yet implemented)
-- AI chat replaces the manual NDA form (LiteLLM → OpenRouter/Cerebras, structured outputs, live preview, download when complete)
 - All document types from catalog.json, with AI detecting the requested type; generic preview/PDF components for less common types
 - Frontend sign up / sign in UI, user menu, auth context
 - Document persistence: save, list, load, delete documents per user (`/api/documents` CRUD)
@@ -81,8 +84,9 @@ Backend available at http://localhost:8000
 - `POST /api/auth/signin` - Sign in (401 on bad credentials) and set session cookie
 - `POST /api/auth/signout` - Clear session cookie (204)
 - `GET /api/auth/me` - Current user (401 if not signed in)
+- `POST /api/chat` - `{messages, fields}` → `{reply, fields}` (503 if OPENROUTER_API_KEY unset, 502 if the LLM fails)
 
 ### Configuration and tests
-- Env vars: `PRELEGAL_DB_PATH` (default `backend/data/prelegal.db`), `PRELEGAL_STATIC_DIR` (default `frontend/out`), `PRELEGAL_SECRET_KEY` (random per process if unset), `TEMPLATES_DIR` (frontend build)
-- Tests: `cd backend && uv run pytest`; `cd frontend && npm test`; `uv run --project backend python -m pytest tests`
+- Env vars: `OPENROUTER_API_KEY` (required for chat; loaded from the root `.env`), `PRELEGAL_DB_PATH` (default `backend/data/prelegal.db`), `PRELEGAL_STATIC_DIR` (default `frontend/out`), `PRELEGAL_SECRET_KEY` (random per process if unset), `TEMPLATES_DIR` (frontend build)
+- Tests: `cd backend && uv run pytest` (includes a live LLM test when `OPENROUTER_API_KEY` is set); `cd frontend && npm test`; `uv run --project backend python -m pytest tests`
 - Local run without Docker: `cd frontend && npm run build`, then `cd backend && uv run prelegal-backend`
